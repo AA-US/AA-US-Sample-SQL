@@ -1,56 +1,5 @@
-# ---------------------------------------------------------------------- #
-# Functions-DateTime_CodeAlong.sql
-# ---------------------------------------------------------------------- #
-
-USE northwind;
-
-
-
-# ---------------------------------------------------------------------- #
-# MySQL Reference Manual: 12.7 Date and Time Functions
-# ---------------------------------------------------------------------- #
-
-SELECT	NOW() Now,
-				CURDATE() CurrentDate,
-				CURTIME() CurrentTime;
-
-
-
-# ---------------------------------------------------------------------- #
-# MySQL Reference Manual: 12.7 Date and Time Functions
-# ---------------------------------------------------------------------- #
-# DATE_FORMAT(date,format)
-#
-# TIME_FORMAT(time,format)
-#
-# ---------------------------------------------------------------------- #
-# FORMAT SPECIFIERS (partial list) 
-#
-# 	%Y -  Year, numeric, four digits
-# 	%y -  Year, numeric (two digits)
-# 	%M -  Month name (January..December)
-# 	%b -  Abbreviated month name (Jan..Dec)
-# 	%m -  Month, numeric (00..12)
-# 	%c -  Month, numeric (0..12)
-#
-# 	%d -  Day of the month, numeric (00..31)
-# 	%e -  Day of the month, numeric (0..31)
-#
-# 	%j -  Day of year (001..366)
-#
-# 	%H -  Hour (00..23)
-# 	%h -  Hour (01..12)
-# 	%I -  Hour (01..12)
-#
-# 	%p -  AM or PM
-# 	%r -  Time, 12-hour (hh:mm:ss followed by AM or PM)
-# 	%T -  Time, 24-hour (hh:mm:ss)
-#
-# 	%i 	- Minutes, numeric (00..59)
-# 	%S - Seconds (00..59)
-# 	%s -  Seconds (00..59)
-# ---------------------------------------------------------------------- #
-
+Use Northwind
+-- Date functions
 
 
 SELECT	Now() Now,
