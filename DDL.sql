@@ -1,17 +1,3 @@
-# ---------------------------------------------------------------------- #
-# DDL-Practice-1_CodeAlong.sql
-# ---------------------------------------------------------------------- #
-/*
-	•	Practice using DDL to
-			o	Create database
-			o	Create, Alter database table
-			o	Constrain database table data and relations
-	•	Practice using DML to
-			o	Insert, Update, Delete records
-			o	Observe constraint enforcement
-*/
-
-
 
 -- ################################################################################
 --	DATABASE
@@ -36,18 +22,10 @@ SHOW CREATE DATABASE demodb; -- gives sql code to create db
 SHOW DATABASES;
 
 
-
--- -----------------------------------------------
--- CODE ALONG: drop database
--- -----------------------------------------------
-
 -- drop database demodb
 Drop database demodb;
 SHOW DATABASES;
 
--- -----------------------------------------------
--- CODE ALONG: create database using defaults
--- -----------------------------------------------
 
 -- create database DDLPractice using default options
 CREATE DATABASE DDLPractice
@@ -59,49 +37,9 @@ SHOW DATABASES;
 
 use DDLPractice;
 
--- ################################################################################
---	TABLE
--- ################################################################################
-
 -- -- -----------------------------------------------------------------------------
--- CODE ALONG: create table
+-- Create table
 -- -- -----------------------------------------------------------------------------
--- MySQL Reference Manual: 13.1.12 CREATE TABLE Statement
-/*
-	Table
-		Reservation
-	Columns
-		ReservationId
-		LastName
-		FirstName				<--intentional typo
-		PhoneNumber			<-- allow NULL
-		IsMobilePhone		<-- allow NULL
-		EmailAddress		<-- allow NULL
-		PartySize				<-- 0 < PartySize < 7
-		ReservationTime
-		DateReserved
-		IsCanceled
-*/
-
--- create table Reservation
-
-/*
-create table Reservation
-(
-		ReservationId INT UNSIGNED NOT NULL AUTO_INCREMENT primary key,
-		LastName varchar(32) NOT NULL,
-        FirstName varchar(32) NOT NULL,				
-		PhoneNumber	varchar(16) NULL,
-		IsMobilePhone BIT NULL,
-		EmailAddress VARCHAR(64) NULL,
---error in this line		PartySize TINYINT UNSIGNED NOT NULL constraint CK_Reservation_PartySize Check(PartySize > 0 and PartySize < 7) enforced,			<-- 0 < PartySize < 7
-		ReservationTime datetime not null,
-		DateReserved datetime not null default current_timestamp,
-		LastUpdated DateTime Not Null Default Current_timestamp On Update Current_TimeStamp,
-        IsCancelled bit not null default (0)
-        
-);
-*/
 
 CREATE TABLE Reservation
 (
@@ -125,10 +63,6 @@ show tables;
 
 SHOW CREATE TABLE reservation;
 describe reservation;
--- -----------------------------------------------------------------------------
--- CODE ALONG: alter table - rename column w/o changing column definition
--- -----------------------------------------------------------------------------
--- MySQL Reference Manual: 13.1.9 ALTER TABLE Statement
 
 -- alter table
 
@@ -136,7 +70,7 @@ ALTER TABLE reservation
 RENAME column fIRsTNAME TO FirstName;
   
 -- ----------------------------------------------------------------------------------
--- CODE ALONG: alter table - modify column definition without changing column name
+-- alter table - modify column definition without changing column name
 -- ----------------------------------------------------------------------------------
 
 -- alter table
@@ -145,7 +79,7 @@ modify PhoneNumber Char(12);
 
 
 -- ----------------------------------------------------------------------------------
--- CODE ALONG: alter table - add constraint
+--  alter table - add constraint
 -- ----------------------------------------------------------------------------------
 
 -- add constraint
@@ -167,7 +101,7 @@ from information_schema.check_constraints;
 
 
 -- ----------------------------------------------------------------------------------
--- CODE ALONG: alter table - drop constraint
+-- alter table - drop constraint
 -- ----------------------------------------------------------------------------------
 
 -- drop constraint
@@ -178,7 +112,7 @@ from information_schema.check_constraints;
 
 
 -- ----------------------------------------------------------------------------------
--- CODE ALONG: alter table - add column
+--  alter table - add column
 -- ----------------------------------------------------------------------------------
 
 -- add column
@@ -188,15 +122,12 @@ from information_schema.check_constraints;
   
   describe reservation;
   
-  -- observe added column in table def
-  
-  
-  
+    
   -- --------------------------------------------------------------------------------
--- CODE ALONG: alter table - drop column
+-- alter table - drop column
 -- ----------------------------------------------------------------------------------
 
--- drop column
+
 alter table reservation
 drop column middlename;
 
@@ -206,14 +137,9 @@ describe reservation;
 
 
   -- --------------------------------------------------------------------------------
--- CODE ALONG: observe AUTO_INCREMENT
+-- observe AUTO_INCREMENT
 -- ----------------------------------------------------------------------------------
 
--- insert records into Reservation
-
-
-
--- view inserted records
 
 select * from reservation;
 
@@ -256,16 +182,12 @@ select * from reservation;
 truncate TABLE reservation;
 
 
--- insert records into reservation
-
-
-
 -- view insertd records
 select * from reservation;
 
 
 -- --------------------------------------------------------------------------------
--- CODE ALONG: observe column LastUpdated
+--  observe column LastUpdated
 -- --------------------------------------------------------------------------------
 
 -- insert record into Reservation
@@ -300,29 +222,12 @@ select * from reservation;
 
 -- one-to-one; cascading delete
 -- -----------------------------------------------
--- CODE ALONG: create second table
+-- create second table
 -- -----------------------------------------------
-/*
-	Table
-		ReservationNote
-	Columns
-		ReservationId			<-- PK,FK
-		Note
-*/
+
 
 select * from reservation;
 
-Create Table ReservationNote
-(
-  ReservationID INT UNSIGNED NOT NULL Primary Key,
-  Note Varchar(120) Not Null
-  
-  Constraint FK_ReservationNote_ReservationID Foreign Key (ReservationID)
-              Reference Reservation (ReservationID)
-		      OnUpdate no action
-              on Delete cascade
-              
-);  -- bad
 
 CREATE TABLE ReservationNote
 (
@@ -368,10 +273,6 @@ where reservationid=3;  -- enforcement works
 
 
 
-
-
-
-
 -- delete record from Reservation that has associated record in ReservationNote
 
 delete from reservation
@@ -387,7 +288,7 @@ left join reservationnote n on
 r.ReservationId=n.ReservationId;
 
 -- -----------------------------------------------
--- CODE ALONG: rename table
+--  rename table
 -- -----------------------------------------------
 
 -- rename table ReservationNote to ReservationInfo
@@ -403,7 +304,7 @@ select * from reservationinfo;
 
 
 -- -----------------------------------------------
--- CODE ALONG: drop table
+--  drop table
 -- -----------------------------------------------
 
 -- drop tables Reservation and ReservationInfo
