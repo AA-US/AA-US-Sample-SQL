@@ -1,22 +1,24 @@
--- - Select
--- Q1 Select all the records from the Customers table.
+
+Use Northwind;
+--  Select
+--  Select all the records from the Customers table.
 Select * from customers; -- 93 rows returned
 
--- Q2 Get distinct countries from the Customers table.
+--  Get distinct countries from the Customers table.
 Select distinct Country from customers;  -- 22 distict countries from customer table
 
--- Q3 Get all the records from the Customers table where the CustomerID starts with “BL”.
+--  Get all the records from the Customers table where the CustomerID starts with “BL”.
 Select CustomerID from customers
 where CustomerID like 'BL%'; -- two ID's
 
 Select * from customers limit 100;
 
 
--- Q4 Get the first 100 records of the Orders table.
+--  Get the first 100 records of the Orders table.
 Select distinct * from customers limit 100; -- distict will not help as customer are unique in table
 
 
--- Q5 Get all customers that live in the postal codes 1010, 3012, 12209, and 05023.
+--  Get all customers that live in the postal codes 1010, 3012, 12209, and 05023.
 Select PostalCode from customers
 where PostalCode in (1010, 3012, 12209, 05023);
 
@@ -24,7 +26,7 @@ Select PostalCode from customers
 where PostalCode in ('1010', '3012', '12209', '05023'); -- both queries same result but since PostalCode defined as varchar sigle quotes should be used if integer no need
 
 
--- Q6 Get all orders where the ShipRegion is not equal to NULL.
+--  Get all orders where the ShipRegion is not equal to NULL.
 Select ShipRegion from orders -- total rowe 830
 where ShipRegion <> ''; -- 323 rows returned
 
@@ -34,7 +36,7 @@ where ShipRegion is null; -- 507 records received
 Select * from orders -- total rowe 830
 where ShipRegion is null; -- 507 records received -- list of all oders with no postal code
 
--- Q7 Get all customers ordered by the country, then by the city.
+--  Get all customers ordered by the country, then by the city.
 
 Select * from customers
 order by Country, City ;
@@ -48,11 +50,11 @@ group by CustomerID
 order by Country, City ;
 
 
--- Q8 Calculate the average, max, and min of the quantity at the `Order Details` table.
+--  Calculate the average, max, and min of the quantity at the `Order Details` table.
 Select AVG(Quantity) AS AQ, min(Quantity) As MQ, MAX(quantity) AS MXQ  from orderdetails;
 -- no group by used - result 23.81, 1 & 130
 
--- Q9 Calculate the average, max, and min of the quantity at the `Order Details` table, grouped by the OrderID.
+--  Calculate the average, max, and min of the quantity at the `Order Details` table, grouped by the OrderID.
 Select  OrderID, avg(quantity) AS AQ, min(Quantity) AS MINQ, max(Quantity) AS MAXQ from orderdetails
 group by OrderID; -- test oderid 10248 avg is 9.00 , min 5 max 12
 
@@ -68,12 +70,12 @@ group by OrderID; -- add % sign to avewrage
 
 
 -
--- Q10 Find the CustomerID that placed order 10290 (Orders table)
+--  Find the CustomerID that placed order 10290 (Orders table)
 
 select * from `order details`
 where OrderID = 10248 ;-- validated above statement  -- using back tick ` for space in table name.
 
--- Q11 Do an inner join, left join, right join on orders and Customers tables.
+--  Do an inner join, left join, right join on orders and Customers tables.
 
 -- Inner Join
 
@@ -100,5 +102,20 @@ SELECT E.firstname AS "Employee Name", M.firstname AS "Manager" FROM employees E
 
 Select FirstName from employees where reportsto = (Select EmployeeID from employees where FirstName= 'Andrew');  -- 5 rows
 
+--  Get category name, count of orders processed by the USA employees
 
+select c.CategoryName,
+m.Country,
+Count(o.OrderID) As TNOOrdersUSA
+from `order details` d
+inner join orders o on
+d.OrderID=o.OrderID
+inner join employees m on
+o.EmployeeID=m.EmployeeID
+inner join products p on
+d.ProductID=p.ProductID
+inner join categories c on
+p.CategoryID=c.CategoryID
+Group by c.CategoryName, m.Country
+having m.Country like 'USA';  -- 8 rows
 
