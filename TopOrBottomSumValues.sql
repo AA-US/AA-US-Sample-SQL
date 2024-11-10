@@ -1,5 +1,7 @@
+use northwind
+
 -- Sum, Top and bottom values
--- NorthWind
+
 
 select UnitPrice * Quantity as Total from [Order Details]
 
